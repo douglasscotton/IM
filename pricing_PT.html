@@ -1,0 +1,714 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+    function Export2Doc(element, filename = 'Pricing_' + getUrlVars()["legacyID"]){
+        var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        var footer = "</body></html>";
+        var html = html+document.getElementById(element).innerHTML+footer;
+    
+        
+        //link url
+        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+        
+        //file name
+        filename = filename?filename+'.doc':'document.doc';
+        
+        // Creates the  download link element dynamically
+        var downloadLink = document.createElement("a");
+    
+        document.body.appendChild(downloadLink);
+        
+        //Link to the file
+        downloadLink.href = url;
+            
+        //Setting up file name
+        downloadLink.download = filename;
+            
+        //triggering the function
+        downloadLink.click();
+        //Remove the a tag after donwload starts.
+        document.body.removeChild(downloadLink);
+    }
+
+  function printDiv() {
+            var divContents = document.getElementById("Proposta_Editavel").innerHTML;
+            var a = window.open('', '', 'height=600, width=600');
+            a.document.write('<html>');
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+    }
+
+var client = getUrlVars()["client"];
+var name = getUrlVars()["name"];
+var legacyID = getUrlVars()["legacyID"];
+var qtde_mes = parseInt(getUrlVars()["qtde_mes"]);
+var Pr_Volume = parseInt(getUrlVars()["Pr_Volume"]);
+var qtde_pages = parseInt(getUrlVars()["qtde_pages"]);
+var type_Desc = getUrlVars()["type_Desc"];
+var resolution_Desc = getUrlVars()["resolution_Desc"];
+var qtde_indices = parseInt(getUrlVars()["qtde_indices"]);
+var price = parseFloat(getUrlVars()["price"]).toFixed(3) * 1;
+var type_Prep = getUrlVars()["type_Prep"];
+var Public = getUrlVars()["Public"];
+var duplex = getUrlVars()["duplex"];
+var tipifica = getUrlVars()["tipifica"];
+var cardID = getUrlVars()["cardID"];
+var TipoProjeto = getUrlVars()["TipoProjeto"];
+var DB = getUrlVars()["DB"];
+var DataHora = getUrlVars()["DataHora"];
+var Objetivo = getUrlVars()["Objetivo"];
+
+	if (Objetivo == "S")
+	{
+	   var OBJ = "ESTE PRECO E SOMENTE PARA SIMULACAO NAO SE DEVE UTILIZAR PARA GERAR UMA PROPOSTA COMERCIAL"
+	}
+	if (Objetivo == "P")
+	{
+	   var OBJ = ""
+	}
+
+	
+var desc_tipifica;
+
+	if (type_Prep == "Simples")
+	{
+	   var type_Prep_Desc = "Documentos em saquinhos ou envelopes com 1-2 grampos/clipes por documento"
+	}
+	if (type_Prep == "Media")
+	{
+	   var type_Prep_Desc = "Documentos em saquinhos ou envelopes com 3-5 grampos/clipes por documento"
+	}
+	if (type_Prep == "Complexo")
+	{
+	   var type_Prep_Desc = "Documentos em pastas com Romeo e Julieta  e 1-10 grampos por documento"
+	}
+
+
+	if (tipifica == 0)
+	{
+	   var desc_tipifica = "Este projeto nao contempla tipifica&ccedil;&atilde;o de documentos"
+	}
+	if (tipifica == 1)
+	{
+	   var desc_tipifica = "Tipifica&ccedil;&atilde;o de 2 ate 5 tipos documentais"
+	}
+	if (tipifica == 2)
+	{
+	   var desc_tipifica = "Tipifica&ccedil;&atilde;o de 6 ate 10 tipos documentais"
+	}
+	if (tipifica == 3)
+	{
+	   var desc_tipifica = "Tipifica&ccedil;&atilde;o de 11 ate 15 tipos documentais"
+	}
+	if (tipifica == 4)
+	{
+	   var desc_tipifica = "Tipifica&ccedil;&atilde;o de 16 ate 25 tipos documentais"
+	}
+
+	if (DB == "S")
+	{
+	   var desc_DB = "Projeto com Base de Dados para Indices"
+	}
+	if (DB == "N")
+	{
+	   var desc_DB = ""
+	}
+
+
+
+var idx_1_nome = getUrlVars()["idx_1_nome"];
+var idx_1_nc = getUrlVars()["idx_1_nc"];
+var idx_1_tipo = getUrlVars()["idx_1_tipo"];
+var idx_2_nome = getUrlVars()["idx_2_nome"];
+var idx_2_nc = getUrlVars()["idx_2_nc"];
+var idx_2_tipo = getUrlVars()["idx_2_tipo"];
+var idx_3_nome = getUrlVars()["idx_3_nome"];
+var idx_3_nc = getUrlVars()["idx_3_nc"];
+var idx_3_tipo = getUrlVars()["idx_3_tipo"];
+var idx_4_nome = getUrlVars()["idx_4_nome"];
+var idx_4_nc = getUrlVars()["idx_4_nc"];
+var idx_4_tipo = getUrlVars()["idx_4_tipo"];
+var idx_5_nome = getUrlVars()["idx_5_nome"];
+var idx_5_nc = getUrlVars()["idx_5_nc"];
+var idx_5_tipo = getUrlVars()["idx_5_tipo"];
+
+var vl_Setup = 14253;
+
+	if (TipoProjeto == "Recorrente")
+	{
+		var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)) * qtde_mes);
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+		var fat_mensal = fat_Total / qtde_mes
+		var vol_mensal = parseInt(total_images / qtde_mes)
+		var vol_diario = parseInt(vol_mensal / 20)
+		var vol_semanal = parseInt(vol_diario * 5)
+		var fat_Total_Setup = fat_Total + vl_Setup
+	}
+	if (TipoProjeto == "Nao%20Recorrente")
+	{
+		var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+		var fat_mensal = fat_Total / qtde_mes
+		var vol_mensal = parseInt(total_images / qtde_mes)
+		var vol_diario = parseInt(vol_mensal / 20)
+		var vol_semanal = parseInt(vol_diario * 5)
+		var fat_Total_Setup = fat_Total + vl_Setup
+	}
+	if (TipoProjeto == "Nao+Recorrente")
+	{
+		var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+		var fat_mensal = fat_Total / qtde_mes
+		var vol_mensal = parseInt(total_images / qtde_mes)
+		var vol_diario = parseInt(vol_mensal / 20)
+		var vol_semanal = parseInt(vol_diario * 5)
+		var fat_Total_Setup = fat_Total + vl_Setup
+	}
+
+	
+function mostrarIndices()
+{
+	if (qtde_indices == "1")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "2")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "3")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "4")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "5")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_5_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_5_nc + '</td><td style="width: 137px; text-align: center;">' + idx_5_tipo + '</td></tr></tbody></table>';
+	}
+}
+
+function preco_Insight()
+{
+	if (Public == "InSight%20Essential")
+	{
+		document.getElementById('Tabela_Insight').innerHTML= '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidade</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Pacote M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">R$ 930,00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">R$ 180,00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicional</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">R$ 150,00 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>';
+	}
+	if (Public == "InSight+Essential")
+	{
+		document.getElementById('Tabela_Insight').innerHTML= '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidade</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Pacote M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">R$ 930,00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">R$ 180,00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicional</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">R$ 150,00 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>';
+	}
+}
+
+
+
+
+	if (TipoProjeto == "Recorrente" || tipifica == 4)
+	{
+		BatchClass = "CUSTOM"
+	}
+	else if  (qtde_indices == "5")
+	{
+		BatchClass = "SHERPA"
+	}
+	else if  (Public == "InSight%20Essential" || qtde_indices == "5")
+	{
+		BatchClass = "SHERPA"
+	}
+	else
+	{
+		if (resolution_Desc == "200dpi") 
+		{
+			if (qtde_indices == 1)
+			{
+				BatchClass = "Padrao _IM01_200_PDF_1F"
+			}
+			if (qtde_indices == 2)
+			{
+				BatchClass = "Padrao _IM02_200_PDF_2F"
+			}
+			if (qtde_indices == 3)
+			{
+				BatchClass = "Padrao _IM03_200_PDF_3F"
+			}
+			if (qtde_indices == 4)
+			{
+				BatchClass = "Padrao _IM04_200_PDF_4F"
+			}
+		}
+		else if (resolution_Desc == "300dpi")
+		{
+			if (qtde_indices == 1)	
+			{
+				BatchClass = "Padrao _IM09_300_PDF_1F"
+			}
+			if (qtde_indices == 2)
+			{
+				BatchClass = "Padrao _IM10_300_PDF_2F"
+			}
+			if (qtde_indices == 3)
+			{
+				BatchClass = "Padrao _IM011_300_PDF_3F"
+			}
+			if (qtde_indices == 4)
+			{
+				BatchClass = "Padrao _IM012_300_PDF_4F"
+			}
+		}
+	}
+
+		var OBS_01 = "<strong>" + '1. 06 Horas de Gerenciamento: ' + "</strong>" + 'Ultrapassado o prazo de 30 (trinta) dias para finalização da DT devido a atrasos do/da CLIENTE, serão cobradas no mínimo 6 horas de gerenciamento por semana de atraso.' + "<br>" 
+		var OBS_01 = OBS_01 + '&nbsp;&nbsp;&nbsp; Finalizada a Definição Técnica (DT), o/a CLIENTE deverá aprová-la, expressamente, em até 10 (dez) dias corridos.' + "<br>" 
+		var OBS_01 = OBS_01 + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6 horas de gerenciamento por semana (RM/DM) = R$ 1.059,39' + "<br>" 
+		var OBS_01 = OBS_01 + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6 horas de gerenciamento por semana (DS) = R$ 1.946,67' + "<br>" 
+		var OBS_01 = OBS_01 + "<strong>" + '2. Setup: ' + "</strong>" + 'O faturamento de 50% do valor do  setup ocorrerá na assinatura do contrato e os 50% restantes se manterão conforme o cronograma do projeto, independente de qualquer replanejamento de datas.' + "<br>" 
+		var OBS_01 = OBS_01 + "<strong>" + '3. Faturamento Mínimo: ' + "</strong>" + 'Após 30 dias corridos, a contar da assinatura do contrato, a Iron Mountain iniciará o faturamento, ainda que no valor mínimo conforme cronograma de volumetria e faturamento, tendo em vista do esforço já realizado. Os serviços serão faturados  mensalmente com base nos volumes produzidos no período, exceto, em caso de cobrança de faturamento mínimo.' + "<br>" 
+		var OBS_01 = OBS_01 + "<strong>" + '4. Termination Fee: ' + "</strong>" + 'O prazo mínimo contratual será de ' + qtde_mes + ' mes(es), para adequação dos investimentos e business case do projeto. Na possibilidade deste prazo não ser cumprido na sua totalidade, deverá ser aplicado o “Termination Fee” equivalente a 1 (um) faturamento mensal, calculado pela média dos 6 (seis) faturamentos anteriores à rescisão, multiplicado pelo número de meses faltantes até o término do prazo contratual.' + "<br>" 
+		var OBS_01 = OBS_01 + "<strong>" + '5. Alterações de Escopo: ' + "</strong>" + 'Mudança de estratégia do cliente ou redução da volumetria do serviço orçado, não impactarão no valor de faturamento mínimo previsto nesta proposta pelo período de 12 meses ou pelo período que durar o projeto. Após esses 12 meses ou período do projeto será possível nova negociação de volumes.' + "<br>" 
+
+
+</script>
+<div id="Proposta_Editavel">
+
+<p style="text-align:center"><img alt="" src="http://brspomdrc2q01:8083/imagens/Prop_02%20-%20Cabecado.png" /></p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 704px;">
+<tbody>
+<tr>
+<td style="text-align: center;">
+<span style="color: #ff0000;"><strong><script>document.write(OBJ); </script></strong></span>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 704px;">
+	<tbody>
+		<tr>
+			<td style="width: 137px;"><strong>Client:</strong></td>
+			<td style="width: 554px;"><script>document.write(client.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>LOB:</strong></td>
+			<td style="width: 554px;">GDS</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Project:</strong></td>
+			<td style="width: 554px;">Digitaliza&ccedil;&atilde;o</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Legacy ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(legacyID.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pricing Analyst:</strong></td>
+			<td style="width: 554px;">Mounty</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Account Manager:</strong></td>
+			<td style="width: 554px;"><script>document.write(name.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tipo de Projeto:</strong></td>
+			<td style="width: 554px;"><script>document.write(TipoProjeto.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tempo de Projeto:</strong></td>
+			<td style="width: 554px;"><script>document.write(qtde_mes); </script> mes(es)</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pipefy Card ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(cardID.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Data e Hora::</strong></td>
+			<td style="width: 554px;"><script>document.write(DataHora.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tipo BatchClass::</strong></td>
+			<td style="width: 554px;"><script>document.write(BatchClass.replace(/%20/g," ")); </script></td>
+		</tr>
+
+	</tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 765px;">
+	<tbody>
+		<tr>
+			<td style="width: 755px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 755px;"><strong>ESCOPO CONSIDERADO</strong>
+			<hr /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 672px;">
+	<tbody>
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Prepara</strong><strong style="text-align: center;">&ccedil;&atilde;o</strong></span></td>
+			<td style="width: 537px;">- <script>document.write(type_Prep); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(type_Prep_Desc); </script></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="4" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><strong>Digitaliza</strong><strong style="text-align: center;">&ccedil;&atilde;o</strong></td>
+			<td style="width: 537px;">- <script>document.write(type_Desc.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(resolution_Desc); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- PDF</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- Folhas Duplex: <script>document.write(duplex); </script>%</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Tipifica</strong>&ccedil;&atilde;o</span></td>
+			<td style="width: 537px;">- <script>document.write(desc_tipifica); </script></td>
+		</tr>
+
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Indexa</strong></span><strong style="color: rgb(0, 0, 0); text-align: center; background-color: rgb(204, 204, 204);">&ccedil;&atilde;o</strong></td>
+			<td style="width: 537px;">
+			<div id="Indices">
+			<p><script>
+
+                mostrarIndices();
+
+                </script></p>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;"><strong>&nbsp;&nbsp;<script>document.write(desc_DB); </script></strong></td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Controle de Qualidade</strong></td>
+			<td style="width: 537px;">- 9% do Processo com qualidade de 98,5%</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Remontagem</strong></span></td>
+			<td style="width: 537px;">- Formato original</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Disponibiliza&ccedil;&atilde;o das imagens</strong></td>
+			<td style="width: 537px;">- <script>document.write(Public.replace(/%20/g," ")); </script></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td style="width: 279px;"><strong>Observa&ccedil;&otilde;es:</strong>
+
+			<hr /></td>
+			<td style="width: 375px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">O Cliente dever&aacute; treinar e dar acesso as plataformas externas a Iron Mountain</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">Qualquer atividade que fuja do escopo desenhado acima dever&aacute; ser realizada nova precifica&ccedil;&atilde;o.</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">Cada documento tem uma m&eacute;dia de <strong><script>document.write(qtde_pages); </script></strong> p&aacute;gina(s)</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td style="width: 279px;"><strong>PREMISSAS:</strong>
+
+			<hr /></td>
+			<td style="width: 375px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;"><script>document.write(OBS_01); </script></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 229px;"><strong>Volumes:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Servi&ccedil;o</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Unidade</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volume Diario</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volume Semanal</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volume Mensal</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volume Total</strong></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Digitaliza&ccedil;&atilde;o</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_diario).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_semanal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(total_images).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="width: 229px;"><strong>Linhas de Cobranca:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Bill Code</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Descri&ccedil;&atilde;o</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Unidade</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Volume Mensal</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Pre&ccedil;o Unit&aacute;rio</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Fat. Minimo</b></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">24</td>
+			<td style="width: 657px; text-align: center;">Digitaliza&ccedil;&atilde;o</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;">&nbsp;<script>document.write(price.toLocaleString('pt-br',{ maximumSignificantDigits: 3, style: 'currency', currency: 'BRL'})); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(fat_mensal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;"> &nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">34</td>
+			<td style="width: 657px; text-align: center;">Setup - OnTime*&nbsp;&nbsp;</td>
+			<td style="width: 657px; text-align: center;" colspan="3"><strong>Kofax + sFTP ou InSight Essential</strong> - Processamento Kofax e exporta&ccedil;&atilde;o para sFTP ou InSight Essential, sem nenhum relatorio espeficico. Nao contempla configura&ccedil;&atilde;o de tipifica&ccedil;&atilde;o.</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(vl_Setup.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: left;" colspan="6">*Cortesia de Faturamento M&iacute;nimo ou Cobran&ccedil;a de taxa de Setup dever&aacute; ser aprovada pela Diretoria Financeira</td>
+		</tr>
+			
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<div id="Tabela_Insight">
+			<p><script>
+
+                preco_Insight();
+
+                </script></p>
+			</div>
+		
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 367px;"><strong>Total do Projeto:</strong>
+
+			<hr /></td>
+			<td colspan="4" rowspan="1" style="width: 286px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center; background-color: rgb(102, 204, 255);"><span style="font-family:arial,helvetica,sans-serif;"><strong>Descri&ccedil;&atilde;o dos Servi&ccedil;os</strong></span></td>
+			<td rowspan="1" style="width: 161px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Valor</strong></td>
+			<td rowspan="1" style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center;">Faturamento Minimo Mensal</td>
+			<td style="width: 161px; text-align: center;"><script>document.write(fat_mensal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Faturamento Total do Projeto</td>
+			<td style="width: 161px; text-align: center;"><script>document.write(fat_Total_Setup.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="4" rowspan="1" style="width: 333px; text-align: center;">Termination fee (3 faturamentos da m&eacute;dia dos &uacute;ltimos 06 ou 12 meses de faturamento ou precifica&ccedil;&atilde;o)</td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Prazo de Processamento do Projeto</td>
+			<td style="width: 161px; text-align: center;"><script>document.write(qtde_mes); </script> mes(es)</td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<div style="page-break-after: always"><span style="display: none;">&nbsp;</span></div>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;"><span style="font-size:18px;"><strong>TABELA DE PRECOS ADICIONAIS</strong></span><br />
+			<span style="color:#FF8C00;">(Obriga&oacute;rio inserir em todas as propostas DS)</span></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+
+<table align="center" border="1" cellpadding="0" cellspacing="0" class="waffle" style="width: 750px;">
+
+	<thead>
+	</thead>
+	<tbody>
+		<tr style="height: 20px;">
+			<td class="s1" dir="ltr" style="background-color: rgb(74, 134, 232); text-align: center; font-weight: bold; color: rgb(255, 255, 255); font-family: Arial; font-size: 10pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">BILLCODE</td>
+			<td class="s2" dir="ltr" style="background-color: rgb(74, 134, 232); text-align: center; font-weight: bold; color: rgb(255, 255, 255); font-family: Arial; font-size: 10pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">ATIVIDADE</td>
+			<td class="s2" dir="ltr" style="background-color: rgb(74, 134, 232); text-align: center; font-weight: bold; color: rgb(255, 255, 255); font-family: Arial; font-size: 10pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">DESCRICAO</td>
+			<td class="s1" dir="ltr" style="background-color: rgb(74, 134, 232); text-align: center; font-weight: bold; color: rgb(255, 255, 255); font-family: Arial; font-size: 10pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">UNIDADE / A&Ccedil;&Atilde;O</td>
+			<td class="s1" dir="ltr" style="background-color: rgb(74, 134, 232); text-align: center; font-weight: bold; color: rgb(255, 255, 255); font-family: Arial; font-size: 10pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">PRE&Ccedil;O</td>
+		</tr>
+		<tr style="height: 59px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">12</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Triagem Fisica</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Separar documentos que ser&atilde;o digitalizados</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Documento</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 0,478</td>
+		</tr>
+		<tr style="height: 59px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">22</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Indexacao sem Base</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Indexa&ccedil;&atilde;o adicional ou para indexa&ccedil;&atilde;o dos campos por falta de informa&ccedil;&atilde;o na base de dados de correla&ccedil;&atilde;o</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Caractere</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 0,022</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">22</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Pr&eacute; Cadastro</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Cadastro dos documentos para facilitar pesquisa em processamento</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Documento</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 0,022</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">51F</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Hora Desenvolvimento</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Valor hora de customiza&ccedil;&atilde;o ou solicita&ccedil;oes adicionais</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Hora</td>
+			<td class="s6" dir="ltr" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 220,00</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">22</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Documento sem Indice</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Realizar busca em base de dados do Indice chave para indexar o documento</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Documento</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 0,991</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">38</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Pesquisa em processamento (crit&eacute;rio de pesquisa e cobran&ccedil;a)</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Buscar um documento no per&iacute;odo em que o f&iacute;sico est&aacute; na opera&ccedil;&atilde;o DS a digitaliza&ccedil;&atilde;o. Um pr&eacute; requisito &eacute; que os documentos estejam catalogados (pr&eacute; cadastro)</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Documento</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 0,779</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">38</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Devolu&ccedil;&atilde;o de documentos</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Devolver documentos que n&atilde;o tem rela&ccedil;&atilde;o alguma com o projeto.</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">por Documento</td>
+			<td class="s6" style="background-color: rgb(243, 243, 243); text-align: right; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">R$ 1,982</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">19</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Desvio de volumetria</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Volume enviado menor do que o acordadona proposta / contrato gerando ociosidade na opera&ccedil;&atilde;o (mais aplic&aacute;vel a esteiras dedicadas)</td>
+			<td class="s5" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">Faturamento m&iacute;nimo</td>
+			<td class="s10" dir="ltr" style="background-color: rgb(243, 243, 243); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">&nbsp;</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">19</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Desvio de Premissas</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Ao iniciar o processamento s&atilde;o identificadas situa&ccedil;&otilde;es do tipo:<br />
+			- Prontuarios geram menos imagens do que o premissado na proposta;<br />
+			- Caixas possuem menos documentos do que o previsto<br />
+			<br />
+			Estas situa&ccedil;&otilde;es impactam a produ&ccedil;&atilde;o e o faturamento do projeto</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Gerar faixas de pre&ccedil;os para caso haja algum desvio, possamos aplicar um pre&ccedil;o diferente</td>
+			<td class="s10" style="background-color: rgb(243, 243, 243); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">&nbsp;</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s3" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">12</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Documenta&ccedil;&atilde;o f&iacute;sica diferente do acordado</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Documento f&iacute;sico implantado com formato A4 e no decorrer do processamento s&atilde;o encontrados documentos de formatos diferentes, como: Livros, folhas de grandes formatos (A0, A, A3,...) por exemplo</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Ter faixas de pre&ccedil;os para todos formatos de folhas em todos os projetos</td>
+			<td class="s10" style="background-color: rgb(243, 243, 243); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">&nbsp;</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s12" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">12</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Manutencao de Documentos</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Realizar reparos nos documentos. Por exemplo: documentos rasgados</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Por Documento</td>
+			<td class="s10" style="background-color: rgb(243, 243, 243); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">&nbsp;</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td class="s12" dir="ltr" style="background-color: rgb(255, 255, 255); text-align: center; font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">12</td>
+			<td class="s4" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Matriz de tipoligia</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Ao iniciar o processamento, s&atilde;o identificados tipos de documentos relacionados ao processo que n&atilde;o foram formalizados na matriz de documentos do projeto</td>
+			<td class="s4" dir="ltr" style="background-color: rgb(255, 255, 255); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; overflow: hidden; overflow-wrap: break-word; direction: ltr; padding: 2px 3px;">Tipificar como &quot;outros&quot; e digitalizar, ou aumentar o pre&ccedil;o baseado no aumento da APH com a cria&ccedil;&atilde;o de uma nova tipologia</td>
+			<td class="s10" style="background-color: rgb(243, 243, 243); font-family: docs-Roboto, Arial; font-size: 11pt; vertical-align: middle; white-space: nowrap; direction: ltr; padding: 2px 3px;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+</div>
+
+
+
+<p style="text-align: center;"><button onclick="printDiv();">Imprimir</button><button onclick="Export2Doc('Proposta_Editavel');">Salvar Proposta</button></p>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>
+
+
