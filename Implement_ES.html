@@ -1,0 +1,468 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="cursor: auto;">
+
+<script type="text/javascript" src="Parametros_ES.js"></script>
+
+<script>
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+    function Export2Doc(element, filename = 'Pricing_' + getUrlVars()["legacyID"]){
+        var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        var footer = "</body></html>";
+        var html = html+document.getElementById(element).innerHTML+footer;
+    
+        
+        //link url
+        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+        
+        //file name
+        filename = filename?filename+'.doc':'document.doc';
+        
+        // Creates the  download link element dynamically
+        var downloadLink = document.createElement("a");
+    
+        document.body.appendChild(downloadLink);
+        
+        //Link to the file
+        downloadLink.href = url;
+            
+        //Setting up file name
+        downloadLink.download = filename;
+            
+        //triggering the function
+        downloadLink.click();
+        //Remove the a tag after donwload starts.
+        document.body.removeChild(downloadLink);
+    }
+
+  function printDiv() {
+            var divContents = document.getElementById("Proposta_Editavel").innerHTML;
+            var a = window.open('', '', 'height=600, width=600');
+            a.document.write('<html>');
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+    }
+	
+	
+var client = getUrlVars()["client"];
+var name = getUrlVars()["name"];
+var legacyID = getUrlVars()["legacyID"];
+var resolution_Desc = getUrlVars()["resolution_Desc"];
+var qtde_indices = parseInt(getUrlVars()["qtde_indices"]);
+var price = parseFloat(getUrlVars()["price"]).toFixed(3) * 1;
+var Public = getUrlVars()["Public"];
+var cardID = getUrlVars()["cardID"];
+var desc_tipifica;
+
+function mostrarIndices()
+
+{
+	if (qtde_indices == "1")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "2")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "3")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "4")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "5")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_5_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_5_nc + '</td><td style="width: 137px; text-align: center;">' + idx_5_tipo + '</td></tr></tbody></table>';
+	}
+}
+
+
+</script>
+
+<div id="Proposta_Editavel">
+
+<p style="text-align:center"><img alt="" src="http://brspomdrc2q01:8083/imagens/Prop_02%20-%20Cabecado.png" /></p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 750px;">
+	<tbody>
+		<tr>
+			<td style="width: 137px;"><strong>Client:</strong></td>
+			<td style="width: 554px;"><script>document.write(client.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>LOB:</strong></td>
+			<td style="width: 554px;">GDS</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Project:</strong></td>
+			<td style="width: 554px;">Digitaliza&ccedil;&atilde;o</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Legacy ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(legacyID.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pricing Analyst:</strong></td>
+			<td style="width: 554px;">Mounty</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Account Manager:</strong></td>
+			<td style="width: 554px;"><script>document.write(name.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tipo de Proyecto:</strong></td>
+			<td style="width: 554px;"><script>document.write(TipoProjeto.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tiempo del Proyecto:</strong></td>
+			<td style="width: 554px;"><script>document.write(qtde_mes); </script> mes(es)</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pipefy Card ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(cardID.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pais:</strong></td>
+			<td style="width: 554px;"><script>document.write(pais.replace(/%20/g," ")); </script></td>
+		</tr>
+	</tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 765px;">
+	<tbody>
+		<tr>
+			<td style="width: 755px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 755px;"><strong>ALCANCE</strong>
+			<hr /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 672px;">
+	<tbody>
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Prepara</strong><strong style="text-align: center;">&ccedil;&atilde;o</strong></span></td>
+			<td style="width: 537px;">- <script>document.write(type_Prep); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(type_Prep_Desc); </script></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="4" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><strong>Digitaliza</strong><strong style="text-align: center;">&ccedil;&atilde;o</strong></td>
+			<td style="width: 537px;">- <script>document.write(type_Desc.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(resolution_Desc); </script></td>
+		</tr>
+		<tr> 
+			<td style="width: 537px;">- PDF</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- Hojas Duplex: <script>document.write(duplex); </script>%</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Tipifica</strong>&ccedil;&atilde;o</span></td>
+			<td style="width: 537px;">- <script>document.write(desc_tipifica); </script></td>
+		</tr>
+
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Indexa</strong></span><strong style="color: rgb(0, 0, 0); text-align: center; background-color: rgb(204, 204, 204);">&ccedil;&atilde;o</strong></td>
+			<td style="width: 537px;">
+			<div id="Indices">
+			<p><script>
+
+                mostrarIndices();
+
+                </script></p>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Controle de Qualidade</strong></td>
+			<td style="width: 537px;">- 9% do Processo com qualidade de 98,5%</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Remontagem</strong></span></td>
+			<td style="width: 537px;">- Formato original</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Disponibiliza&ccedil;&atilde;o das imagens</strong></td>
+			<td style="width: 537px;">- <script>document.write(Public.replace(/%20/g," ")); </script></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 229px;"><strong>Volumenes:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Servicio</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Unidad</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumem Diario</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumem Semanal</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumem Mensual</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumem Total</strong></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Digitalizacion</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_diario).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_semanal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(total_images).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 657px;">Cada documento tiene un promedio de <strong><script>document.write(qtde_pages); </script></strong> hoja(s)</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">Cada documento tiene un promedio de <strong><script>document.write(qtde_img_doc); </script></strong> imagem(nes)</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 229px;"><strong>NUMERO DE RECORSOS (Mes):</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>ACTIVIDAD</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>UNIDAD</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>APH</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>RECORSOS</strong></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Preparacion</td>
+			<td style="width: 657px; text-align: center;">hoja</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_PREP).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_PREP);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Scanner</td>
+			<td style="width: 657px; text-align: center;">hoja</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_SCAN).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_SCAN);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Captura</td>
+			<td style="width: 657px; text-align: center;">caractere</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_IDX).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_IDX);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Tipificacion</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_TIP).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_TIP);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">CQ - Imagem</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_CQ_IMG).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_CQ_IMG);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">CQ - Amuestra</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_CQ_MOS).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_CQ_MOS);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Recomposicion</td>
+			<td style="width: 657px; text-align: center;">hoja</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(APH_REC).replace(/\B(?=(\d{3})+(?!\d))/g, "."));</script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(QTDE_HC_REC);</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong></strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong></strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>TOTAL</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong><script>document.write(QTDE_HC_TOT);</script></strong></td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 229px;"><strong>FINANCIERO (Mes):</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>LINEA</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>VALOR</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(255, 255, 255);"><strong></strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(255, 255, 255);"><strong></strong></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">FACTURACION</td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(fat_mensal.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2}));</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">COSTO COMP</td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(parseFloat(COST_COMP).toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2}));</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">COSTO NO COMP</td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(parseFloat(COST_NCOMP).toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2}));</script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">MARGEM</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(MARGEM.toLocaleString('pt-br',{style: 'percent'}));</script></td>
+		</tr>
+		
+	</tbody>
+</table>
+
+
+
+
+
+<p style="text-align: center;">&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="width: 229px;"><strong>Lineas de Cobro:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Bill Code</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Descripcion</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Unidad</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Volumem Mensual</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Precio Unitario</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Fat. Minimo</b></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">24</td>
+			<td style="width: 657px; text-align: center;">Digitalizacio</td>
+			<td style="width: 657px; text-align: center;">imagem</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script></td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(price.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(fat_mensal.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;"> &nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">34</td>
+			<td style="width: 657px; text-align: center;">Setup - OnTime*&nbsp;&nbsp;</td>
+			<td style="width: 657px; text-align: center;" colspan="3"><strong>Kofax + sFTP ou InSight Essential</strong> - Processamento Kofax e exporta&ccedil;&atilde;o para sFTP ou InSight Essential, sem nenhum relatorio espeficico. Nao contempla configura&ccedil;&atilde;o de tipifica&ccedil;&atilde;o.</td>
+			<td style="width: 657px; text-align: center;">$ <script>document.write(vl_Setup.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: left;" colspan="6">*Cortesia de Faturamento M&iacute;nimo ou Cobran&ccedil;a de taxa de Setup dever&aacute; ser aprovada pela Diretoria Financeira</td>
+		</tr>
+			
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<div id="Tabela_Insight">
+			<p><script>
+
+                preco_Insight();
+
+                </script></p>
+			</div>
+		
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 367px;"><strong>Total del Proyecto:</strong>
+
+			<hr /></td>
+			<td colspan="4" rowspan="1" style="width: 286px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center; background-color: rgb(102, 204, 255);"><span style="font-family:arial,helvetica,sans-serif;"><strong>Descri&ccedil;&atilde;o dos Servi&ccedil;os</strong></span></td>
+			<td rowspan="1" style="width: 161px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Valor</strong></td>
+			<td rowspan="1" style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center;">Facturacion Minimo Mensual</td>
+			<td style="width: 161px; text-align: center;">$ <script>document.write(fat_mensal.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Facturacion Total del Proyecto</td>
+			<td style="width: 161px; text-align: center;">$ <script>document.write(fat_Total_Setup.toLocaleString(Moeda,{minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="4" rowspan="1" style="width: 333px; text-align: center;">Termination fee (3 faturamentos da m&eacute;dia dos &uacute;ltimos 06 ou 12 meses de faturamento ou precifica&ccedil;&atilde;o)</td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Plazo Contractual</td>
+			<td style="width: 161px; text-align: center;"><script>document.write(qtde_mes); </script> mes(es)</td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+</div>
+
+<p style="text-align: center;"><button onclick="printDiv();">Imprimir</button><button onclick="Export2Doc('Proposta_Editavel');">Salvar Documento</button></p>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>

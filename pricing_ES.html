@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+    function Export2Doc(element, filename = 'Pricing_' + getUrlVars()["legacyID"]){
+        var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        var footer = "</body></html>";
+        var html = html+document.getElementById(element).innerHTML+footer;
+    
+        
+        //link url
+        var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+        
+        //file name
+        filename = filename?filename+'.doc':'document.doc';
+        
+        // Creates the  download link element dynamically
+        var downloadLink = document.createElement("a");
+    
+        document.body.appendChild(downloadLink);
+        
+        //Link to the file
+        downloadLink.href = url;
+            
+        //Setting up file name
+        downloadLink.download = filename;
+            
+        //triggering the function
+        downloadLink.click();
+        //Remove the a tag after donwload starts.
+        document.body.removeChild(downloadLink);
+    }
+
+  function printDiv() {
+            var divContents = document.getElementById("Proposta_Editavel").innerHTML;
+            var a = window.open('', '', 'height=600, width=600');
+            a.document.write('<html>');
+            a.document.write('<body>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+    }
+
+
+var client = getUrlVars()["client"];
+var name = getUrlVars()["name"];
+var legacyID = getUrlVars()["legacyID"];
+var qtde_mes = parseInt(getUrlVars()["qtde_mes"]);
+var Pr_Volume = parseInt(getUrlVars()["Pr_Volume"]);
+var qtde_pages = parseInt(getUrlVars()["qtde_pages"]);
+var type_Desc = getUrlVars()["type_Desc"];
+var resolution_Desc = getUrlVars()["resolution_Desc"];
+var qtde_indices = parseInt(getUrlVars()["qtde_indices"]);
+var price = parseFloat(getUrlVars()["price"]).toFixed(3);
+var type_Prep = getUrlVars()["type_Prep"];
+var Public = getUrlVars()["Public"];
+var Pais = getUrlVars()["pais"];
+var duplex = getUrlVars()["duplex"];
+var tipifica = getUrlVars()["tipifica"];
+var cardID = getUrlVars()["cardID"];
+var desc_tipifica;
+var TipoProjeto = getUrlVars()["TipoProjeto"];
+var DB = getUrlVars()["DB"];
+
+var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+var fat_mensal = fat_Total / qtde_mes
+var vol_mensal = parseInt(total_images / qtde_mes)
+var vol_diario = parseInt(vol_mensal / 20)
+var vol_semanal = parseInt(vol_diario * 5)
+var fat_Total_Setup = fat_Total + vl_Setup
+
+
+
+	if (type_Prep == "Simple")
+	{
+	   var type_Prep_Desc = "Documentos en bolsas o sobres con 1-2 grapas / clipes / corchetes por documento"
+	}
+	if (type_Prep == "Media")
+	{
+	   var type_Prep_Desc = "Documentos en bolsas o sobres con 3-5 grapas / clipes / corchetes por documento"
+	}
+	if (type_Prep == "Compleja")
+	{
+	   var type_Prep_Desc = "Documentos en carpetas con broche sujetador / nepaco / accoclip  y 1-10 grapas por documento"
+	}
+
+	if (tipifica == 0)
+	{
+	   var desc_tipifica = "Este proyecto no considera tipificación de documentos"
+	}
+	if (tipifica == 1)
+	{
+	   var desc_tipifica = "Tipificación de 2 hasta 5 tipos documentales"
+	}
+	if (tipifica == 2)
+	{
+	   var desc_tipifica = "Tipificación de 6 hasta 10 tipos documentales"
+	}
+	if (tipifica == 3)
+	{
+	   var desc_tipifica = "Tipificación de 11 hasta 15 tipos documentales"
+	}
+	if (tipifica == 4)
+	{
+	   var desc_tipifica = "Tipificación de 16 hasta 25 tipos documentales"
+	}
+
+	if (DB == "S")
+	{
+	   var desc_DB = "Proyecto con Base de Datos para los Indices"
+	}
+	if (DB == "N")
+	{
+	   var desc_DB = ""
+	}
+
+
+
+	if (TipoProjeto == "Recurrente")
+	{
+		var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)) * qtde_mes);
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+		var fat_mensal = fat_Total / qtde_mes
+		var vol_mensal = parseInt(total_images / qtde_mes)
+		var vol_diario = parseInt(vol_mensal / 20)
+		var vol_semanal = parseInt(vol_diario * 5)
+		var fat_Total_Setup = fat_Total + vl_Setup
+	}
+	if (TipoProjeto == "No%20Recurrente")
+	{
+		var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(3);
+		var fat_mensal = fat_Total / qtde_mes
+		var vol_mensal = parseInt(total_images / qtde_mes)
+		var vol_diario = parseInt(vol_mensal / 20)
+		var vol_semanal = parseInt(vol_diario * 5)
+		var fat_Total_Setup = fat_Total + vl_Setup
+	}
+
+
+
+
+
+	if (Pais == "Mexico")
+	{
+		var moneda = " (Pesos Mexicanos)"
+		var percent_CQ = "20%"
+		var vl_Setup = 7000	
+		
+		if (Public == "Media")
+		{
+			var vl_Setup = 10275
+		}
+
+		if (fat_mensal < 13000)
+		{
+			fat_mensal= 13000
+			fat_Total = 13000 * qtde_mes
+			fat_Total_Setup = fat_Total + vl_Setup
+			//fat_mensal = fat_Total / qtde_mes
+		}
+		
+		var IE_table = '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidad</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Paquete M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">U$ 155.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">U$ 30.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicionales</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">U$ 25,00 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>'
+		var fat_Total_Setup = fat_Total + vl_Setup
+
+		var OBS_01 = ' - Procesamiento en las instalaciones de IM' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los expedientes deben ser trasladados en cajas en buenas condiciones y agrupados y bien identificados por folder, bolsa o sobre' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se considera un control de calidad con 95% de eficiencia' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se consideran insertos  digitales o físicos durante la ejecución del proceso' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se consideran actividades propias de la custodia de los expedientes físicos por parte de Iron Mountain en el presente proyecto' + "<br>" 
+		var OBS_01 = OBS_01 + ' - En caso de ser solicitada la consulta de un expediente que está en la línea de producción y no ha concluido el proceso de digitalización, el tratamiento de este expediente tendrá un cargo adicional definido de acuerdo al grado de afectación que este tenga en la producción como reproceso o digitalización On Demand' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se consideran requerimientos de consulta por parte del cliente a expedientes que esten en procesamiento.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La localización de los indices estan la primera hoja del expediente.' + "<br>" 
+
+		var OBS_Insight = ''
+
+		if (Public == "InSight%20Essential")
+		{
+			var OBS_Insight = ' - No considera seteo de reportes especiales.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Iron Mountain setea 05 usuarios y los otros 05 usuarios serán seteados por el cliente.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Tiempo de implementación: de 4 a 6 semanas.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Los clientes están sujetos a tarifas de baja de ambiente al final de su contrato, o si su contrato se interrumpe en cualquier momento durante el plazo. Las tarifas cobradas incluyen USD 150 fijos por servicios profesionales y un cargo variable de baja de ambiente de USD 0,11 por Gigabyte.' + "<br>" 
+		}
+
+	}
+	if (Pais == "Peru")
+	{
+		var moneda = " (Soles)"
+		var percent_CQ = "5%"
+		var vl_Setup = 2898
+		var IE_table = '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidad</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Paquete M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">U$ 155.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">U$ 30.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicionales</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">U$ 25.00 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>'
+		var fat_Total_Setup = fat_Total + vl_Setup
+
+		var OBS_01 = ' - El cliente debe entregar base de datos con información de valor para el proceso' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los campos a indexar se deben ubicar en la primera hoja del documento. No aplica si el dato se ubica en la tapa del file que lo contiene' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No aplica procesos con KTM ni PDF/A.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No aplica para imágenes a color.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No considera procesamiento de planos, tomos empastados, anillados.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No considera clasificación u ordenamiento de los documentos.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se procesa el 100% de los documentos recibidos en la línea de producción.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Aplica sólo para procesos en Lima, en caso de Provincias comuniquese con Pre Sales.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Incluye entrega de base de datos en formato Excel e imágenes procesadas. No incluye entrega de reportes.' + "<br>" 
+		var OBS_01 = OBS_01 + '' + "<br>" 
+		var OBS_01 = OBS_01 + 'TIEMPOS:' + "<br>" 
+		var OBS_01 = OBS_01 + '' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se consideran 15 días útiles para la Fase Pre Operativa.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se consideran 10 días útiles para la configuración de la herramienta de procesamiento interno.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - El tiempo de implementación de la herramienta en caso de DRC2 será de 20 días útiles aproximadamente, contados desde el Kick Off con el cliente. Este alcance no considera seteo de reportes ni creación de perfiles o roles adicionales a los existentes.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - En el caso de Insight Essential, se considera un tiempo de implementación de 4 a 6 semanas.' + "<br>" 
+
+		if (tipifica != 0)
+		{
+			var OBS_01 = OBS_01 + '' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Se contempla la tipificación de documentos que el cliente indica deben ser identificados dentro del file. Los documentos a ser identificados deben tener palabras clave en el titulo para su identicación. No incluye lectura de todo el documento para inferir el dato o tipo de documento. No incluye clasificacion con lectura en otros idiomas.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Se contempla la tipificación de documentos que el cliente indica deben ser identificados dentro del file.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Contempla una estructura Jerárquica que permite identificar el File, y dentro de él, un pdf por cada tipo de documento a identificar. El resto del contenido del file sera digitalizado en un solo pdf adicional, y podrá ser visualizado también dentro del mismo file' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Los documentos a identificar, serán estructurados o de fácil identificación - no requiere la lectura del contenido del documento para inferir su tipificación.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Se considera la identificación de todos los tipos de documentos que contengan el file del cliente.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - Los files se encuentran ordenados conforme al checklist enviado por el cliente. En caso se deba realizar una clasificación y/o ordenamiento de los documentos dentro del file, dichos casos pasarán por Pre Venta para su evaluación.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - La tipificación no considera procesos de Recursos Humanos, estos casos pasarán por Pre Venta.' + "<br>" 
+			var OBS_01 = OBS_01 + ' - En caso el cliente cuenta con más de un checklist de tipos de documentos, estos casos pasarán por Pre Venta.' + "<br>" 
+		
+		}
+
+
+		var OBS_Insight = ''
+
+		if (Public == "InSight%20Essential")
+		{
+			var OBS_Insight = ' - No considera seteo de reportes especiales.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Iron Mountain setea 05 usuarios y los otros 05 usuarios serán seteados por el cliente.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Tiempo de implementación: de 4 a 6 semanas.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Los clientes están sujetos a tarifas de baja de ambiente al final de su contrato, o si su contrato se interrumpe en cualquier momento durante el plazo. Las tarifas cobradas incluyen USD 150 fijos por servicios profesionales y un cargo variable de baja de ambiente de USD 0,11 por Gigabyte.' + "<br>" 
+		}
+
+	}
+	if (Pais == "Argentina")
+	{
+		var moneda = " (Pesos Argentinos)"
+		var percent_CQ = "5%"
+		var vl_Setup = 52500
+		var IE_table = '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidad</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Paquete M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">U$ 155.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">U$ 30.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicionales</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">U$ 25.00 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>'
+		var fat_Total_Setup = fat_Total + vl_Setup
+
+		var OBS_01 = ' - El proceso de digitalización se realizará en instalaciones de Iron Mountain, en días hábiles.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - El tamaño de los documentos a digitalizar será A4/Carta/Oficio.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se contempla la digitalización de documentos encuadernados (libros, revistas).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los documentos estarán impresos en papel comercial en un 99%. En caso de existir papeles tipo Químico, Manteca o Calco no deberán superar nunca el 1% del universo.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los documentos son entregados en buen estado. Menos de un 0,1% de los documentos requerirá reparación para su introducción en los scanners con alimentador automático (ej, para corregir grietas o roturas en los bordes).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se contempla la clasificación de documentos por legajo/file a procesar.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - El/los campo(s) a indexar estarán presentes en la primera hoja de cada documento.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se digitalizará la totalidad de las hojas del legajo (no se realizará la separación de documentos que no se quieran digitalizar).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Margen de error: Es importante destacar que así como todo proceso tiene un margen de error, en este proceso, la tolerancia resultado de los controles de calidad establecidos, es del 3%. El porcentaje de error se toma sobre el universo del lote procesado.  El universo se mide con la unidad de medida similar a la que ocasionó el error. Si el error se ocasionó a nivel de una imagen el universo se toma sobre el total de imágenes, si se ocasionó sobre una unidad que agrupa varias imágenes (Ej.: Documento, Legajo/File, Expediente, Carpeta, etc.) Se toma el total de grupos de imágenes. No se consideran errores las hojas en blanco, hojas con leve inclinación, bordes negros y dobleces que no afecten la lectura del documento.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La inserción de los separadores de digitalización que identifican el inicio de un nuevo legajo/file se realiza cuando visualmente se reconoce un legajo. Se considera un legajo/file a un conjunto de hojas vinculadas por algún medio físico (banda elástica/elástico), gancho/corchete, carpeta). No se contempla la consolidación de legajos/files a partir de hojas sueltas.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No incluye costos de transporte, consulta de documentos a bodega, movimiento/mudanza inicial, etc.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Considera una variación de volumen de +/- del 10%. En cualquier otro caso debe ser reevaluado.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La puesta en marcha será de 15 días hábiles en promedio luego de firmado el SOW  / recibida la Orden de Compra.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La implementación del proyecto no considera una base de datos entregada por el cliente para agregar índices adicionales.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No es parte del alcance del proyecto atender requerimientos de consulta de documentos que se encuentren en proceso. En caso de ser necesario se debe evaluar por separado.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Precios entregados no incluyen impuestos' + "<br>" 
+
+		var OBS_Insight = ''
+
+		if (Public == "InSight%20Essential")
+		{
+			var OBS_Insight = ' - No considera seteo de reportes especiales.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Iron Mountain setea 05 usuarios y los otros 05 usuarios serán seteados por el cliente.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Tiempo de implementación: de 4 a 6 semanas.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Los clientes están sujetos a tarifas de baja de ambiente al final de su contrato, o si su contrato se interrumpe en cualquier momento durante el plazo. Las tarifas cobradas incluyen USD 155 fijos por servicios profesionales y un cargo variable de baja de ambiente de USD 0,11 por Gigabyte.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - El servicio mensualmente será facturado de acuerdo a la cotización del Dólar Oficial de Banco Nación tipo vendedor al momento de la fecha de facturación' + "<br>" 
+		}
+
+
+	}
+	if (Pais == "Chile")
+	{
+		var moneda = " (UF)"
+		var percent_CQ = "5%"
+		var vl_Setup = 13
+		var IE_table = '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidad</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Paquete M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">UF 5.00 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">UF 0.90 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicionales</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">UF 0.75 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>'
+		var price = parseFloat(getUrlVars()["price"]).toFixed(5);
+		var fat_Total = parseInt(total_images) * parseFloat(price).toFixed(5);
+		var fat_mensal = fat_Total / qtde_mes
+		var fat_Total_Setup = fat_Total + vl_Setup
+
+		if (fat_mensal < 7)
+		{
+			fat_Total = 7 * qtde_mes
+			fat_Total_Setup = fat_Total + vl_Setup
+		//	fat_mensal = fat_Total / qtde_mes
+
+		}
+
+	
+		var OBS_01 = ' - El proceso de digitalización se realizará en instalaciones de Iron Mountain, en días hábiles.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - El tamaño de los documentos a digitalizar será A4/Carta/Oficio.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se contempla la digitalización de documentos encuadernados (libros, revistas).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los documentos estarán impresos en papel comercial en un 99%. En caso de existir papeles tipo Químico, Manteca o Calco no deberán superar nunca el 1% del universo.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los documentos son entregados en buen estado. Menos de un 0,1% de los documentos requerirá reparación para su introducción en los scanners con alimentador automático (ej, para corregir grietas o roturas en los bordes).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se contempla la clasificación de documentos por legajo/file a procesar.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - El/los campo(s) a indexar estarán presentes en la primera hoja de cada documento.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se digitalizará la totalidad de las hojas del legajo (no se realizará la separación de documentos que no se quieran digitalizar).' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Margen de error: Es importante destacar que así como todo proceso tiene un margen de error, en este proceso, la tolerancia resultado de los controles de calidad establecidos, es del 3%. El porcentaje de error se toma sobre el universo del lote procesado.  El universo se mide con la unidad de medida similar a la que ocasionó el error. Si el error se ocasionó a nivel de una imagen el universo se toma sobre el total de imágenes, si se ocasionó sobre una unidad que agrupa varias imágenes (Ej.: Documento, Legajo/File, Expediente, Carpeta, etc.) Se toma el total de grupos de imágenes. No se consideran errores las hojas en blanco, hojas con leve inclinación, bordes negros y dobleces que no afecten la lectura del documento.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La inserción de los separadores de digitalización que identifican el inicio de un nuevo legajo/file se realiza cuando visualmente se reconoce un legajo. Se considera un legajo/file a un conjunto de hojas vinculadas por algún medio físico (banda elástica/elástico), gancho/corchete, carpeta). No se contempla la consolidación de legajos/files a partir de hojas sueltas.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No incluye costos de transporte, consulta de documentos a bodega, movimiento/mudanza inicial, etc.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Considera una variación de volumen de +/- del 10%. En cualquier otro caso debe ser reevaluado.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La puesta en marcha será de 15 días hábiles en promedio luego de firmado el SOW  / recibida la Orden de Compra.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - La implementación del proyecto no considera una base de datos entregada por el cliente para agregar índices adicionales.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No es parte del alcance del proyecto atender requerimientos de consulta de documentos que se encuentren en proceso. En caso de ser necesario se debe evaluar por separado.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Precios entregados no incluyen impuestos' + "<br>" 
+
+		var OBS_Insight = ''
+
+		if (Public == "InSight%20Essential")
+		{
+			var OBS_Insight = ' - No considera seteo de reportes especiales.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Iron Mountain setea 05 usuarios y los otros 05 usuarios serán seteados por el cliente.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Tiempo de implementación: de 4 a 6 semanas.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Los clientes están sujetos a tarifas de baja de ambiente al final de su contrato, o si su contrato se interrumpe en cualquier momento durante el plazo. Las tarifas cobradas incluyen USD 155 fijos por servicios profesionales y un cargo variable de baja de ambiente de USD 0,11 por Gigabyte.' + "<br>" 
+		}
+
+	}
+	if (Pais == "Colombia")
+	{
+		var moneda = " (Pesos Colombianos)"
+		var percent_CQ = "5%"
+		var vl_Setup = 0
+		var IE_table = '<table align="center" style="width: 524.8px;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 184px; text-align: center;"><span style="color: #ffffff;">InSight Essential</span></td><td style="width: 166px; text-align: center;"><span style="color: #ffffff;">Unidad</span></td><td style="width: 147.8px; text-align: center;"><span style="color: #ffffff;">Valor</span></td></tr><tr><td style="width: 184px; text-align: center;">Paquete M&iacute;nimo</td><td style="width: 166px; text-align: center;">10 usu&aacute;rios + 100 Gb</td><td style="width: 147.8px; text-align: center;">$ 813.000 / mes</td></tr><tr><td style="width: 184px; text-align: center;">Usu&aacute;rio Adicional</td><td style="width: 166px; text-align: center;">por Usu&aacute;rio</td><td style="width: 147.8px; text-align: center;">$ 125.000 / mes</td></tr><tr><td style="width: 184px; text-align: center;">50 Gb Adicionales</td><td style="width: 166px; text-align: center;">por 50 Gb&nbsp;</td><td style="width: 147.8px; text-align: center;">$ 105.000 / mes</t></tbody></table><p style="text-align: center;">&nbsp;</p>'
+		var fat_Total_Setup = fat_Total + vl_Setup
+
+		var price = parseFloat(getUrlVars()["price"]).toFixed(1);
+
+
+		var OBS_01 = ' - El valor no incluye el IVA' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Se asume que la información física es tamaño carta u oficio' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los campos de captura deben ser de idioma Español' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se asumen primeros auxilios ni restauración de documentos en mal estado' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Aplica para  solo  una tipología  documental' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los campos a capturar deben estar en la primera página del documento' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No se incluye valores de transporte para la recolección y luego entrega' + "<br>" 
+		var OBS_01 = OBS_01 + ' - No incluye organización documental' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Cotización válida por 90 días' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Si en el momento del inicio del proyecto, los volúmenes o características del proceso varían, el proceso debe ser evaluado técnica y económicamente por Iron Mountain Colombia.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Valores para proyectos en Fabrica de digitalización IMC' + "<br>" 
+		var OBS_01 = OBS_01 + ' - SLA de entregables serán acordado en el documento técnico' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Si las actividades solicitadas se realizan por etapas (de manera parcial) se deberán replantear las tarifas indicadas.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Los precios indicados para los procesos descritos, aplican siempre y cuando, los volúmenes se reciban desde el inicio del proyecto.' + "<br>" 
+		var OBS_01 = OBS_01 + ' - Si la cantidad de unidades documentales e imágenes, disminuyen en un 10% se definirá una nueva tarifa acorde a los volúmenes reales.' + "<br>" 
+
+		var OBS_Insight = ''
+
+		if (Public == "InSight%20Essential")
+		{
+			var OBS_Insight = ' - No considera seteo de reportes especiales.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Iron Mountain setea 05 usuarios y los otros 05 usuarios serán seteados por el cliente.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Tiempo de implementación: de 4 a 6 semanas.' + "<br>" 
+			var OBS_Insight = OBS_Insight + ' - Los clientes están sujetos a tarifas de baja de ambiente al final de su contrato, o si su contrato se interrumpe en cualquier momento durante el plazo. Las tarifas cobradas incluyen USD 150 fijos por servicios profesionales y un cargo variable de baja de ambiente de USD 0,11 por Gigabyte.' + "<br>" 
+		}
+
+	}
+
+
+var idx_1_nome = getUrlVars()["idx_1_nome"];
+var idx_1_nc = getUrlVars()["idx_1_nc"];
+var idx_1_tipo = getUrlVars()["idx_1_tipo"];
+var idx_2_nome = getUrlVars()["idx_2_nome"];
+var idx_2_nc = getUrlVars()["idx_2_nc"];
+var idx_2_tipo = getUrlVars()["idx_2_tipo"];
+var idx_3_nome = getUrlVars()["idx_3_nome"];
+var idx_3_nc = getUrlVars()["idx_3_nc"];
+var idx_3_tipo = getUrlVars()["idx_3_tipo"];
+var idx_4_nome = getUrlVars()["idx_4_nome"];
+var idx_4_nc = getUrlVars()["idx_4_nc"];
+var idx_4_tipo = getUrlVars()["idx_4_tipo"];
+var idx_5_nome = getUrlVars()["idx_5_nome"];
+var idx_5_nc = getUrlVars()["idx_5_nc"];
+var idx_5_tipo = getUrlVars()["idx_5_tipo"];
+
+
+function mostrarIndices()
+{
+	if (qtde_indices == "1")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "2")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "3")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "4")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "5")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMAÑO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_5_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_5_nc + '</td><td style="width: 137px; text-align: center;">' + idx_5_tipo + '</td></tr></tbody></table>';
+	}
+}
+
+function preco_Insight()
+{
+	if (Public == "InSight%20Essential")
+	{
+		document.getElementById('Tabela_Insight').innerHTML= IE_table; 
+	}
+}
+  
+</script>
+
+<div id="Proposta_Editavel">
+<div style="page-break-after: always"></div>
+
+<p style="text-align:center"><img alt="" src="http://brspomdrc2q01:8083/imagens/Prop_02%20-%20Cabecado.png" /></p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 704px;">
+	<tbody>
+		<tr>
+			<td style="width: 137px;"><strong>Pais:</strong></td>
+			<td style="width: 554px;"><script>document.write(Pais.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Cliente:</strong></td>
+			<td style="width: 554px;"><script>document.write(client.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>LOB:</strong></td>
+			<td style="width: 554px;">GDS</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Proyecto:</strong></td>
+			<td style="width: 554px;">Digitalizacion</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Legacy ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(legacyID.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pre Ventas:</strong></td>
+			<td style="width: 554px;">Mounty</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Comercial:</strong></td>
+			<td style="width: 554px;"><script>document.write(name.replace(/%20/g," ").replace(/%C3%A9/g,"é").replace(/%C3%AD/g,"í").replace(/%C3%B3/g,"ó")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tipo de Proyecto:</strong></td>
+			<td style="width: 554px;"><script>document.write(TipoProjeto.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Tiempo del Proyecto:</strong></td>
+			<td style="width: 554px;"><script>document.write(qtde_mes); </script> mes(es)</td>
+		</tr>
+		<tr>
+			<td style="width: 137px;"><strong>Pipefy Card ID:</strong></td>
+			<td style="width: 554px;"><script>document.write(cardID.replace(/%20/g," ")); </script></td>
+		</tr>
+
+	</tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 765px;">
+	<tbody>
+		<tr>
+			<td style="width: 755px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 755px;"><strong>ALCANCE DEL PROYECTO</strong>
+			<hr /></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 672px;">
+	<tbody>
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Preparación</strong></span></td>
+			<td style="width: 537px;">- <script>document.write(type_Prep); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(type_Prep_Desc); </script></td>
+		</tr>
+		<tr>
+			<td colspan="1" rowspan="4" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><strong>Digitalización</strong></td>
+			<td style="width: 537px;">- <script>document.write(type_Desc.replace(/%20/g," ")); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- <script>document.write(resolution_Desc); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- PDF</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;">- Hojas Duplex: <script>document.write(duplex); </script>%</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Tipificación</span></td>
+			<td style="width: 537px;">- <script>document.write(desc_tipifica); </script></td>
+		</tr>
+
+		<tr>
+			<td colspan="1" rowspan="2" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Captura</strong></td>
+			<td style="width: 537px;">
+			<div id="Indices">
+			<p><script>
+
+                mostrarIndices();
+
+                </script></p>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 537px;"><strong>&nbsp;&nbsp;<script>document.write(desc_DB); </script></strong></td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Control de Calidad</strong></td>
+			<td style="width: 537px;">- <script>document.write(percent_CQ); </script> de muestreo</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(204, 204, 204);"><span style="color:#000000;"><strong>Recomposición / Rearmado</strong></span></td>
+			<td style="width: 537px;">- Formato original</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="width: 122px; text-align: center; background-color: rgb(102, 153, 255);"><span style="color:#FFFFFF;"><strong>Disponibilización de las Imagenes</strong></td>
+			<td style="width: 537px;">- <script>document.write(Public.replace(/%20/g," ")); </script></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td style="width: 279px;"><strong>OBSERVACIONES:</strong>
+
+			<hr /></td>
+			<td style="width: 375px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">El usuario Administrador del cliente deberá capacitar y crear los demás usuarios para el acceso a las plataformas de Iron Mountain.</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">Cualquier actividad que no esté detallada en el ALCANCE DEL PROYECTO deberá ser cotizada nuevamente.</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;">Cada documento tiene un promedio de <strong><script>document.write(qtde_pages); </script></strong> hoja(s)</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td style="width: 279px;"><strong>SUPUESTOS:</strong>
+
+			<hr /></td>
+			<td style="width: 375px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width: 657px;"><strong><script>document.write(OBS_01); </script></strong></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+<p>&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 229px;"><strong>Volumenes:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Servicio</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Unidad</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumen Diario</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumen Semanal</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Volumen Mensual</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Total Imagenes del Proyecto</strong></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">Digitalización</td>
+			<td style="width: 657px; text-align: center;">imagen</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_diario).replace(/\B(?=(\d{3})+(?!\d))/g, ",")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_semanal).replace(/\B(?=(\d{3})+(?!\d))/g, ",")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ",")); </script></td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(total_images).replace(/\B(?=(\d{3})+(?!\d))/g, ",")); </script></td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="3" style="width: 229px;"><strong>Lineas de Cobro:</strong>
+
+			<hr /></td>
+			<td colspan="3" rowspan="1" style="width: 229px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Bill Code</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Descripción</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Unidad</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><strong>Volumen Mensual</strong></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Precio Unitario</b></td>
+			<td style="width: 657px; text-align: center; background-color: rgb(51, 153, 255);"><b>Fact. Minimo Mensual</b></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">24</td>
+			<td style="width: 657px; text-align: center;">Digitalización</td>
+			<td style="width: 657px; text-align: center;">imagen</td>
+			<td style="width: 657px; text-align: center;"><script>document.write(String(vol_mensal).replace(/\B(?=(\d{3})+(?!\d))/g, ",")); </script></td>
+			<td style="width: 657px; text-align: center;">$&nbsp;<script>document.write(price); </script></td>
+			<td style="width: 657px; text-align: center;">$&nbsp;<script>document.write(fat_mensal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;"> &nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: center;">34</td>
+			<td style="width: 657px; text-align: center;">Setup - OnTime*&nbsp;&nbsp;</td>
+			<td style="width: 657px; text-align: center;" colspan="3"><strong>Kofax + sFTP o InSight Essential</strong> - Procesamiento Kofax y exportacion para sFTP o InSight Essential, sin reporte específico. No contempla configuracion de tipos documentales.</td>
+			<td style="width: 657px; text-align: center;">$&nbsp;<script>document.write(vl_Setup.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: left;" colspan="6"></td>
+		</tr>
+		<tr>
+			<td style="width: 657px; text-align: left; color: #ff0000"; colspan="6"><strong>Valores expresados en moneda local <script>document.write(moneda); </script></strong></td>
+		</tr>
+			
+	</tbody>
+</table>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<div id="Tabela_Insight">
+			<p><script>
+
+                preco_Insight();
+
+                </script></p>
+			</div>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 657px;"><strong><script>document.write(OBS_Insight); </script></strong></td>
+		</tr>
+	</tbody>
+</table>
+		
+<p style="text-align: center;">&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 667px;">
+	<tbody>
+		<tr>
+			<td colspan="2" style="width: 367px;"><strong>Total del Proyecto:</strong>
+
+			<hr /></td>
+			<td colspan="4" rowspan="1" style="width: 286px;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center; background-color: rgb(102, 204, 255);"><span style="font-family:arial,helvetica,sans-serif;"><strong>Descripción de los Servicios</strong></span></td>
+			<td rowspan="1" style="width: 161px; text-align: center; background-color: rgb(102, 204, 255);"><strong>Valor</strong></td>
+			<td rowspan="1" style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="width: 333px; text-align: center;">Facturacion Minimo Mensual</td>
+			<td style="width: 161px; text-align: center;">$&nbsp;<script>document.write(fat_mensal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Facturacion Total del Proyecto</td>
+			<td style="width: 161px; text-align: center;">$&nbsp;<script>document.write(fat_Total_Setup.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); </script></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="4" rowspan="1" style="width: 333px; text-align: center;"></td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="width: 333px; text-align: center;">Plazo del Procesamiento</td>
+			<td style="width: 161px; text-align: center;"><script>document.write(qtde_mes); </script> mes(es)</td>
+			<td style="width: 155px; text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+</div>
+
+<p style="text-align: center;"><button onclick="printDiv();">Imprimir</button><button onclick="Export2Doc('Proposta_Editavel');">Salvar Propuesta</button></p>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>
