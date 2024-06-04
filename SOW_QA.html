@@ -1,0 +1,49 @@
+<html>
+<head>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var legacyID = getUrlVars()["legacyID"];
+var date = new Date().toLocaleDateString();
+
+var URL = window.location.href
+
+var URL_Split = URL.split('?'); 
+var variaveis = "?" + URL_Split[1]
+
+var pagina = 1
+
+</script>
+
+
+<p align="center"><iframe id="Capa" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="Info" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+
+
+<script>
+
+if (pagina == 1)
+{
+    document.getElementById("Capa").src = "Capa.html" + variaveis;
+    document.getElementById("Info").src = "Teste.html" + variaveis;
+}
+if (pagina == 2)
+{
+    document.getElementById("Capa").src = "Teste.html" + variaveis;
+    document.getElementById("Info").src = "Capa.html"+ variaveis;
+}
+
+</script>
+
+
+
+</html>
+
