@@ -1,0 +1,178 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var email = getUrlVars()["email"];
+var SF_Cliente = getUrlVars()["SF_Cliente"];
+var SF_Endereco = getUrlVars()["SF_Endereco"];
+var SF_Contacto = getUrlVars()["SF_Contacto"];
+var SF_ContactoEmail = getUrlVars()["SF_ContactoEmail"];
+var SF_ContactoTel = getUrlVars()["SF_ContactoTel"];
+var SF_ContactoCargo = getUrlVars()["SF_ContactoCargo"];
+var SF_Projeto = getUrlVars()["SF_Projeto"];
+
+var name = getUrlVars()["name"];
+var TipoProjeto = getUrlVars()["TipoProjeto"];
+var TipoProjetoNome = "Histórico"
+var Pr_Volume = parseInt(getUrlVars()["Pr_Volume"]);
+var qtde_pages = parseInt(getUrlVars()["qtde_pages"]);
+var qtde_mes = parseInt(getUrlVars()["qtde_mes"]);
+var duplex = getUrlVars()["duplex"];
+
+var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+
+var TipoProjetoTexto = ""	
+if (TipoProjeto == "Recorrente")
+{
+	TipoProjetoNome = "Recorrente"
+	TipoProjetoTexto = "mensal"
+}
+
+
+	
+</script>
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="width: 1053px;">
+	<tbody>
+		<tr>
+			<td style="width: 1049px;"><img alt="" height="159" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/header.png" width="1052" /></td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; vertical-align: middle;"><br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="0" cellspacing="0" style="width:700px;">
+				<tbody>
+					<tr>
+						<td style="width: 107px;">&nbsp;</td>
+						<td style="width: 588px;"><span style="color:#0000CD;"><strong><span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:20px;"><span id="docs-internal-guid-c2fcf97f-7fff-a489-2853-8deddd1dc7d3"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline;">1&nbsp; &nbsp; &nbsp; INFORMA&Ccedil;&Otilde;ES GERAIS</span></span></span></span></strong></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<span style="font-family:arial,helvetica,sans-serif;">&nbsp; &nbsp; &nbsp;</span>
+
+			<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:833px;">
+				<tbody>
+					<tr>
+						<td style="background-color: rgb(68, 84, 106); vertical-align: middle; text-align: justify; height: 30px; border-color: rgb(0, 0, 0); width: 238px;">&nbsp; <span style="color:#FFFFFF;"><span style="font-size:18px;"><strong><span style="font-family:arial,helvetica,sans-serif;">Nome do CONTRATANTE</span></strong></span></span></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);">&nbsp; <span style="font-family:arial,helvetica,sans-serif;">&nbsp;<script>document.write(SF_Cliente.replace(/%20/g," "));</script></span></td>
+					</tr>
+					<tr>
+						<td style="height: 30px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0); width: 238px;"><strong style="color: rgb(255, 255, 255); font-size: 18px; text-align: justify; background-color: rgb(68, 84, 106);"><span style="font-family: arial, helvetica, sans-serif;">&nbsp; Endere&ccedil;o</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;">&nbsp; &nbsp;<script>document.write(SF_Endereco.replace(/%20/g," ")); </script></span></td>
+					</tr>
+					<tr>
+						<td style="height: 30px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0); width: 238px;"><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family: arial, helvetica, sans-serif;">&nbsp; Contato</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;">&nbsp; <span style="font-size:18px;"><strong>&nbsp;</strong></span><span style="font-size:16px;"><span style="font-size:18px;"><strong>Nome:</strong></span> <script>document.write(SF_Contacto.replace(/%20/g," ")); </script><br />
+						&nbsp; &nbsp;</span><span style="font-size:18px;"><strong>email:&nbsp;</strong></span><span style="font-size:16px;"> <script>document.write(SF_ContactoEmail.replace(/%20/g," ")); </script><br />
+						&nbsp; &nbsp;</span><span style="font-size:18px;"><strong>Telefone:</strong></span><span style="font-size:16px;"> <script>document.write(SF_ContactoTel.replace(/%20/g," ")); </script><br />
+						&nbsp; &nbsp;</span><span style="font-size:18px;"><strong>Cargo:&nbsp;</strong></span><span style="font-size:16px;"> &nbsp;<script>document.write(SF_ContactoCargo.replace(/%20/g," ")); </script></span></span></td>
+					</tr>
+					<tr>
+						<td style="width: 238px; height: 30px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0);"><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp; Nome do Projeto</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;">&nbsp; &nbsp;<span style="font-size:16px;"><script>document.write(SF_Projeto.replace(/%20/g," ").replace(/%C3%87%C3%83/g,"ÇÃ").replace(/%C3%A7%C3%A3/g,"çã")); </script></span></span></td>
+					</tr>
+					<tr>
+						<td style="width: 238px; height: 60px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0);"><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family: arial, helvetica, sans-serif;">&nbsp; Volume</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;">&nbsp; &nbsp;<script>document.write(TipoProjetoNome.replace(/%20/g," ")); </script><br />
+						&nbsp; &nbsp;Digitaliza&ccedil;&atilde;o de <script>document.write(String(Pr_Volume).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script> documentos <script>document.write(TipoProjetoTexto.replace(/%20/g," ")); </script>(aproximadamente <script>document.write(String(total_images).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script> imagens)</span></td>
+					</tr>
+					<tr>
+						<td style="width: 238px; height: 60px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0);"><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family: arial, helvetica, sans-serif;">&nbsp; In&iacute;cio do Porjeto</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);">&nbsp; <span style="font-size:16px;"><span style="font-family:arial,helvetica,sans-serif;">Uma vez assinadao o documento, havera 5 dias para gerar o Plano de Trabalho com o apoio do Gerente de Projetos</span></span></td>
+					</tr>
+					<tr>
+						<td style="width: 238px; height: 30px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;&nbsp;</span><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family: arial, helvetica, sans-serif;">Dura&ccedil;&atilde;o do Projeto</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);"><span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:16px;">&nbsp; <script>document.write(String(qtde_mes).replace(/\B(?=(\d{3})+(?!\d))/g, ".")); </script> mes(es) ap&oacute;s o Go Live do projeto via cronograma a ser sinalizado pelo Gerente de Projetos.</span></span>&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 238px; height: 30px; background-color: rgb(68, 84, 106); border-color: rgb(0, 0, 0);"><strong style="background-color: rgb(68, 84, 106); color: rgb(255, 255, 255); font-size: 18px; text-align: justify;"><span style="font-family: arial, helvetica, sans-serif;">&nbsp; Contato Iron Mountain</span></strong></td>
+						<td style="width: 583px; border-color: rgb(0, 0, 0);">&nbsp;&nbsp;<span style="font-family: arial, helvetica, sans-serif; font-size: 18px;"><strong>&nbsp;</strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 16px;"><span style="font-size: 18px;"><strong>Gerente Comercial:</strong></span>&nbsp;<script>document.write(name.replace(/%20/g," ")); </script><br />
+						&nbsp; &nbsp;</span><span style="font-family: arial, helvetica, sans-serif; font-size: 18px;"><strong>email:&nbsp;</strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 16px;">&nbsp;<script>document.write(email.replace(/%20/g," ")); </script></span></td>
+					</tr>
+				</tbody>
+					<td style="width: 830px;"><span style="font-size:14px;"><span style="font-family:arial,helvetica,sans-serif;"><span id="docs-internal-guid-ed0b0f3b-7fff-7652-fdee-e3c9b48c8a28"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">&nbsp;&nbsp;&nbsp;Esta SOW foi emitida automaticamente por nosso sistema, garantindo agilidade e precisão no processo de formalização.</span></span></span></td></td>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="0" cellspacing="0" style="width: 700px;">
+				<tbody>
+					<tr>
+						<td style="width: 107px;">&nbsp;</td>
+						<td style="width: 587px;"><strong style="color: rgb(0, 0, 205);"><span style="font-family: arial, helvetica, sans-serif;"><span style="font-size: 20px;">2&nbsp; &nbsp; &nbsp; ESCOPO DO PROJETO</span></span></strong></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 108px;">&nbsp;</td>
+						<td style="width: 830px;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span id="docs-internal-guid-ed0b0f3b-7fff-7652-fdee-e3c9b48c8a28"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">&nbsp;&nbsp;&nbsp;Este documento tem por objetivo descrever e detalhar a presta&ccedil;&atilde;o de servi&ccedil;o de digitaliza&ccedil;&atilde;o dos documentos para a</span><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;"><b> <script>document.write(SF_Cliente.replace(/%20/g," "));</script></span></strong>. Os documentos f&iacute;sicos ser&atilde;o processados nas depend&ecirc;ncias da Iron Mountain.</span></span></span></td></td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<div style="text-align: right;">&nbsp;</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; text-align: center; vertical-align: middle;"><span style="font-size:24px;"><img alt="" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/footer.png" /></span></td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+<br />
+</html>
+

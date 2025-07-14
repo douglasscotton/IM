@@ -1,0 +1,160 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var SF_Cliente = getUrlVars()["SF_Cliente"];
+var SF_Endereco = getUrlVars()["SF_Endereco"];
+var SF_Contacto = getUrlVars()["SF_Contacto"];
+var SF_ContactoEmail = getUrlVars()["SF_ContactoEmail"];
+var SF_ContactoTel = getUrlVars()["SF_ContactoTel"];
+var SF_ContactoCargo = getUrlVars()["SF_ContactoCargo"];
+var SF_Projeto = getUrlVars()["SF_Projeto"];
+
+var name = getUrlVars()["name"];
+var TipoProjeto = getUrlVars()["TipoProjeto"];
+var TipoProjetoNome = "Histórico"
+var Pr_Volume = parseInt(getUrlVars()["Pr_Volume"]);
+var qtde_pages = parseInt(getUrlVars()["qtde_pages"]);
+var qtde_mes = parseInt(getUrlVars()["qtde_mes"]);
+var duplex = getUrlVars()["duplex"];
+
+var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+
+var TipoProjetoTexto = ""	
+if (TipoProjeto == "Recorrente")
+{
+	TipoProjetoNome = "Recorrente"
+	TipoProjetoTexto = "mensal"
+}
+
+
+	
+</script>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="width: 1053px;">
+	<tbody>
+		<tr>
+			<td style="width: 1049px;"><img alt="" height="159" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/header.png" width="1052" /></td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; vertical-align: middle;"><br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 151px;">&nbsp;</td>
+						<td style="width: 787px;">
+						<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-size:20px;"><span style="font-family:arial,helvetica,sans-serif;"><strong><span id="docs-internal-guid-566e5eae-7fff-1f9a-eb09-e67a65682ca7"><span style="color: rgb(0, 176, 240); font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">: Controle de Qualidade do Processo</span></span></strong></span></span><br />
+						<br />
+						<span id="docs-internal-guid-98871341-7fff-6976-e33f-c00855ec4c2c"><span style="font-size: 9.96pt; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;&nbsp;&nbsp;Al&eacute;m dos conceitos de CQ automatizados pelo software de captura, a Iron Mountain utiliza uma&nbsp; ferramenta de CQ, suportada pela norma NBR 5426, que aplica planos de amostragem e procedimentos&nbsp; na inspe&ccedil;&atilde;o de atributos. Realizaremos o controle de qualidade em 5% dos documentos para validar os&nbsp; seguintes atributos:&nbsp;</span></span></span></span><br />
+						&nbsp;</p>
+
+						<ul dir="ltr">
+							<li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">Aus&ecirc;ncia de imagem: ser&atilde;o identificados os documentos f&iacute;sicos pendentes de digitaliza&ccedil;&atilde;o e ser&aacute;&nbsp; feito a inser&ccedil;&atilde;o das imagens no processo.&nbsp;</span></span></span></li>
+							<li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span id="docs-internal-guid-98871341-7fff-6976-e33f-c00855ec4c2c"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">Imagem ileg&iacute;vel ou com sobreposi&ccedil;&atilde;o de informa&ccedil;&atilde;o: s&atilde;o identificados os documentos f&iacute;sicos e&nbsp; separados para nova captura. As imagens anteriores ser&atilde;o exclu&iacute;das.&nbsp;</span></span></span></span></li>
+							<li style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span id="docs-internal-guid-98871341-7fff-6976-e33f-c00855ec4c2c"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">Indexa&ccedil;&atilde;o dos documentos: ser&atilde;o validados todos os indexadores cadastrados.</span></span></span></span></li>
+						</ul>
+
+						<div>&nbsp;</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<div style="text-align: right;">&nbsp;</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<div style="text-align: right;">&nbsp;</div>
+			&nbsp;
+
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 151px;">&nbsp;</td>
+						<td style="width: 787px;">
+						<p dir="ltr" style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:20px;"><span style="font-family:arial,helvetica,sans-serif;"><strong><span id="docs-internal-guid-ea8f1960-7fff-c330-ceea-e884ee85422b"><span style="color: rgb(0, 176, 240); font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">: Disponibiliza&ccedil;&atilde;o das imagens via Link SFTP</span></span></strong></span></span><br />
+						<br />
+						<span id="docs-internal-guid-bc6e15d2-7fff-1bf5-b381-4fd71b888819"><span style="font-size: 10pt; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;"><span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:18px;">&nbsp;&nbsp;&nbsp;&Eacute; o portal de acesso &agrave;s imagens, ferramenta onde a CONTRATANTE ir&aacute; acessar as imagens digitalizadas. O download das imagens poder&aacute; ser realizado em at&eacute; 30 dias.&nbsp;</span></span></span></span><br />
+						<br />
+						<span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:18px;"><span id="docs-internal-guid-bc6e15d2-7fff-1bf5-b381-4fd71b888819"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">&nbsp;&nbsp;&nbsp;O SSH File Transfer Protocol (tamb&eacute;m conhecido como Secure File Transfer Protocol, ou SFTP) &eacute; um protocolo de rede que fornece acesso a arquivos, transfer&ecirc;ncia e gerenciamento de arquivos em um fluxo de dados confi&aacute;vel. Ele foi projetado pela Internet Engineering Task Force (IETF) como uma extens&atilde;o do protocolo Secure Shell (SSH) vers&atilde;o 2.0 para fornecer recursos de transfer&ecirc;ncia segura de arquivos. Esse protocolo pressup&otilde;e que seja executado em um canal seguro, como SSH, que o servidor possa autenticar o cliente e que a identidade do usu&aacute;rio esteja dispon&iacute;vel para o protocolo.</span></span></span></span></p>
+
+						<div>&nbsp;</div>
+
+						<div><br />
+						&nbsp;</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; text-align: center; vertical-align: middle;"><span style="font-size:24px;"><img alt="" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/footer.png" /></span></td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

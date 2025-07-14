@@ -1,0 +1,223 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var SF_Cliente = getUrlVars()["SF_Cliente"];
+var SF_Endereco = getUrlVars()["SF_Endereco"];
+var SF_Contacto = getUrlVars()["SF_Contacto"];
+var SF_ContactoEmail = getUrlVars()["SF_ContactoEmail"];
+var SF_ContactoTel = getUrlVars()["SF_ContactoTel"];
+var SF_ContactoCargo = getUrlVars()["SF_ContactoCargo"];
+var SF_Projeto = getUrlVars()["SF_Projeto"];
+
+var type_Desc = getUrlVars()["type_Desc"];
+var resolution_Desc = getUrlVars()["resolution_Desc"];
+
+var name = getUrlVars()["name"];
+var TipoProjeto = getUrlVars()["TipoProjeto"];
+var TipoProjetoNome = "Histórico"
+var Pr_Volume = parseInt(getUrlVars()["Pr_Volume"]);
+var qtde_pages = parseInt(getUrlVars()["qtde_pages"]);
+var qtde_mes = parseInt(getUrlVars()["qtde_mes"]);
+var duplex = getUrlVars()["duplex"];
+
+	
+var total_images = parseInt((parseInt(Pr_Volume) * parseInt(qtde_pages)) * (1 + (duplex / 100)));
+
+var TipoProjetoTexto = ""	
+if (TipoProjeto == "Recorrente")
+{
+	TipoProjetoNome = "Recorrente"
+	TipoProjetoTexto = "mensal"
+}
+	
+var qtde_indices = parseInt(getUrlVars()["qtde_indices"]);
+var idx_1_nome = getUrlVars()["idx_1_nome"];
+var idx_1_nc = getUrlVars()["idx_1_nc"];
+var idx_1_tipo = getUrlVars()["idx_1_tipo"];
+var idx_2_nome = getUrlVars()["idx_2_nome"];
+var idx_2_nc = getUrlVars()["idx_2_nc"];
+var idx_2_tipo = getUrlVars()["idx_2_tipo"];
+var idx_3_nome = getUrlVars()["idx_3_nome"];
+var idx_3_nc = getUrlVars()["idx_3_nc"];
+var idx_3_tipo = getUrlVars()["idx_3_tipo"];
+var idx_4_nome = getUrlVars()["idx_4_nome"];
+var idx_4_nc = getUrlVars()["idx_4_nc"];
+var idx_4_tipo = getUrlVars()["idx_4_tipo"];
+var idx_5_nome = getUrlVars()["idx_5_nome"];
+var idx_5_nc = getUrlVars()["idx_5_nc"];
+var idx_5_tipo = getUrlVars()["idx_5_tipo"];
+
+function mostrarIndices()
+{
+	if (qtde_indices == "1")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "2")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "3")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "4")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr></tbody></table>';
+	}
+	if (qtde_indices == "5")
+	{
+		document.getElementById('Indices').innerHTML= '<table style="width: 508px; border-color: #333399 sólido ;" border="0"><tbody><tr style="background-color: #333399;"><td style="width: 242px; text-align: center;"><span style="color: #ffffff;">INDICE</span></td><td style="width: 105px; text-align: center;"><span style="color: #ffffff;">TAMANHO</span></td><td style="width: 137px; text-align: center;"><span style="color: #ffffff;">TIPO</span></td></tr><tr><td style="width: 242px; text-align: center;">' + idx_1_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_1_nc + '</td><td style="width: 137px; text-align: center;">' + idx_1_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_2_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_2_nc + '</td><td style="width: 137px; text-align: center;">' + idx_2_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_3_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_3_nc + '</td><td style="width: 137px; text-align: center;">' + idx_3_tipo + '</td></tr></tr><tr><td style="width: 242px; text-align: center;">' + idx_4_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_4_nc + '</td><td style="width: 137px; text-align: center;">' + idx_4_tipo + '</td></tr><tr><td style="width: 242px; text-align: center;">' + idx_5_nome.replace(/%20/g," ") + '</td><td style="width: 105px; text-align: center;">' + idx_5_nc + '</td><td style="width: 137px; text-align: center;">' + idx_5_tipo + '</td></tr></tbody></table>';
+	}
+}
+
+
+	
+</script>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="width: 1053px;">
+	<tbody>
+		<tr>
+			<td style="width: 1049px;"><img alt="" height="159" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/header.png" width="1052" /></td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; vertical-align: middle;"><br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 151px;">&nbsp;</td>
+						<td style="width: 787px;">
+						<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style="font-family:arial,helvetica,sans-serif;"><span style="font-size:20px;"><span id="docs-internal-guid-d03d5588-7fff-24dc-2330-ca1be2e0296b"><span style="color: rgb(0, 176, 240); font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">: Digitaliza&ccedil;&atilde;o da Documenta&ccedil;&atilde;o</span></span></span></span><br />
+						<br />
+						<span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span id="docs-internal-guid-2d1477e4-7fff-8ea2-d75f-f8331af397d2"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">&nbsp;&nbsp;&nbsp;A digitaliza&ccedil;&atilde;o utiliza scanners manuais ou autom&aacute;ticos, dependendo do tipo de documento e do estado&nbsp; f&iacute;sico do papel, convertendo-os para uma m&iacute;dia digital.&nbsp;</span></span><span id="docs-internal-guid-2d1477e4-7fff-8ea2-d75f-f8331af397d2"><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">&nbsp;&nbsp;&nbsp;O formato das p&aacute;ginas ser&aacute; </span><span style="font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">A4</span><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">, a digitaliza&ccedil;&atilde;o&nbsp; ser&aacute; realizada com resolu&ccedil;&atilde;o em <script>document.write(resolution_Desc); </script> </span><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">em <script>document.write(type_Desc.replace(/%20/g," ")); </script></span><span style="font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;"> para garantirmos a legibilidade das imagens.&nbsp;<br />   O formato dos arquivos ser&aacute; PDF. O processo de digitaliza&ccedil;&atilde;o possui alguns controles autom&aacute;ticos em&nbsp; nosso sistema de captura, que s&atilde;o: auto-deskew (alinhamento autom&aacute;tico de imagem), auto-cropping&nbsp; (remo&ccedil;&atilde;o de bordas e ajuste do tamanho de imagem), edge-Detection (remo&ccedil;&atilde;o das informa&ccedil;&otilde;es geradas&nbsp; al&eacute;m da borda do documento), sensor de multi-alimenta&ccedil;&atilde;o (impossibilita a alimenta&ccedil;&atilde;o de duas folhas&nbsp; simultaneamente) e remo&ccedil;&atilde;o autom&aacute;tica das p&aacute;ginas em branco.&nbsp;</span></span></span></span></p>
+
+						<div>&nbsp;</div>
+
+						<div>&nbsp;</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<div style="text-align: right;">&nbsp;</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 151px;">&nbsp;</td>
+						<td style="width: 787px;">
+						<p dir="ltr" style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:20px;"><span style="font-family:arial,helvetica,sans-serif;"><strong><span id="docs-internal-guid-522f35cb-7fff-30c7-45b5-29fd44d00261"><span style="color: rgb(0, 176, 240); font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">: Indexa&ccedil;&atilde;o</span></span></strong></span></span><br />
+						<br />
+						<span id="docs-internal-guid-c1c81e36-7fff-81a1-2ffa-da11304c0305"><span style="font-size: 9.96pt; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;&nbsp;&nbsp;A informa&ccedil;&atilde;o que ser&aacute; indexada para cada documento: </span></span></span></span></p>
+						<br />
+				<div id="Indices">
+					<p><script>
+
+                				mostrarIndices();
+
+                			</script></p>
+				</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<div style="text-align: right;">&nbsp;</div>
+			<br />
+			<br />
+			<br />
+			&nbsp;
+			<br />
+			<br />
+			<br />
+			<table align="left" border="0" cellpadding="1" cellspacing="1" style="width: 950px;">
+				<tbody>
+					<tr>
+						<td style="width: 151px;">&nbsp;</td>
+						<td style="width: 787px;">
+						<p dir="ltr" style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:20px;"><span style="font-family:arial,helvetica,sans-serif;"><strong><span id="docs-internal-guid-072ff230-7fff-ec28-0013-05bb5a09bec2"><span style="color: rgb(0, 176, 240); font-weight: 700; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; vertical-align: baseline; white-space-collapse: preserve;">:&nbsp; Recomposi&ccedil;&atilde;o de Documentos</span></span></strong></span></span><br />
+						<br />
+						<span style="font-size:9.960000038146973pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;&nbsp;&nbsp;Os documentos ser&atilde;o guardados respeitando seu formato original e alocados novamente nas suas caixas&nbsp; padr&atilde;o de origem.&nbsp;&nbsp;</span></span></span></p>
+
+						<p dir="ltr" style="line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style="font-size:18px;"><span style="font-family:arial,helvetica,sans-serif;"><span style="color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">&nbsp;&nbsp;&nbsp;N&atilde;o est&aacute; contemplado neste escopo a recomposi&ccedil;&atilde;o de brochura, espiral, pasta AZ, romeu &amp; julieta, entre&nbsp; outros. Caso seja identificado documentos nestas condi&ccedil;&otilde;es os mesmos ser&atilde;o separados para an&aacute;lise em&nbsp; conjunto com o sponsor do projeto, pois se faz necess&aacute;rio reavaliar o esfor&ccedil;o e custo operacional&nbsp; agregado &agrave; etapa. </span></span></span></p>
+
+						<div><br />
+						&nbsp;</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="width: 1049px; text-align: center; vertical-align: middle;"><span style="font-size:24px;"><img alt="" src="https://imchatbot-douglas-scotton-e8c17f8d46867e842c6696ea62f9bf1270f96.gitlab.io/SOW_QA/images/footer.png" /></span></td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body style="cursor: auto;"><script type="text/javascript">
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var legacyID = getUrlVars()["legacyID"];
+var date = new Date().toLocaleDateString();
+
+var URL = window.location.href
+
+var URL_Split = URL.split('?'); 
+var variaveis = "?" + URL_Split[1]
+
+var Triagem = getUrlVars()["Triagem"];
+var CertDigital = getUrlVars()["CertDigital"];
+var tipifica = getUrlVars()["tipifica"];
+var DB = getUrlVars()["DB"];
+
+</script>
+
+
+<p align="center"><iframe id="001" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="002" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="003" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="004" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="005" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="006" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+<p align="center"><iframe id="007" type="text/html" frameborder="0" height="1550" width="1100" src=""> </iframe></p>
+
+<script>
+
+if (Triagem == 0 && CertDigital == 0 && tipifica == 0 && DB == "N")
+{
+    document.getElementById("001").src = "Capa.html" + variaveis;
+    document.getElementById("002").src = "Info_Geral.html" + variaveis;
+    document.getElementById("003").src = "001.html" + variaveis;
+    document.getElementById("004").src = "002.html" + variaveis;
+    document.getElementById("005").src = "004.html" + variaveis;
+    document.getElementById("006").src = "005.html" + variaveis;
+    document.getElementById("007").src = "006.html" + variaveis;
+}
+
+if (Triagem == 0 && CertDigital == 0 && tipifica > 0 && DB == "N")
+{
+    document.getElementById("001").src = "Capa.html" + variaveis;
+    document.getElementById("002").src = "Info_Geral.html" + variaveis;
+    document.getElementById("003").src = "001.html" + variaveis;
+    document.getElementById("004").src = "003.html" + variaveis;
+    document.getElementById("005").src = "004.html" + variaveis;
+    document.getElementById("006").src = "005.html" + variaveis;
+    document.getElementById("007").src = "006.html" + variaveis;
+}
+
+if (Triagem == 0 && CertDigital == 0 && tipifica == 0 && DB == "S")
+{
+    document.getElementById("001").src = "Capa.html" + variaveis;
+    document.getElementById("002").src = "Info_Geral.html" + variaveis;
+    document.getElementById("003").src = "001.html" + variaveis;
+    document.getElementById("004").src = "007.html" + variaveis;
+    document.getElementById("005").src = "004.html" + variaveis;
+    document.getElementById("006").src = "005.html" + variaveis;
+    document.getElementById("007").src = "006.html" + variaveis;
+}
+
+</script>
+
+
+
+</html>
+
